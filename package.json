@@ -1,0 +1,11 @@
+{
+  "name": "infolen",
+  "version": "1.0.0",
+  "private": true,
+  "description": "InfoLen · 媒体信息密度分布查看器（Material You 动态配色）",
+  "type": "module",
+  "scripts": {
+    "start": "node server.cjs",
+    "dev": "node server.cjs"
+  }
+}

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="color-scheme" content="dark light" />
+<title>InfoLen · Media information density</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%236750A4'/%3E%3Cpath d='M7 22V16M13 22V10M19 22v-8M25 22V8' stroke='white' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,300..700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="./css/tokens.css" />
+<link rel="stylesheet" href="./css/base.css" />
+<link rel="stylesheet" href="./css/components.css" />
+<link rel="stylesheet" href="./css/layout.css" />
+</head>
+<body>
+
+<!-- Frosted acrylic background: monochrome media + primary gradient mapping + gaussian blur -->
+<div class="acrylic" id="acrylic" aria-hidden="true">
+  <canvas class="acrylic__canvas" id="acrylicBase"></canvas>
+  <canvas class="acrylic__canvas acrylic__canvas--accent" id="acrylicAccent"></canvas>
+  <div class="acrylic__scrim"></div>
+  <div class="acrylic__grain"></div>
+</div>
+
+<header class="app-bar">
+  <div class="app-bar__leading">
+    <span class="brand-mark" id="brandMark"></span>
+    <div class="app-bar__titles">
+      <h1 class="title-large">InfoLen</h1>
+      <p class="body-small app-bar__subtitle" id="appBarSubtitle" data-i18n="app.subtitle"></p>
+    </div>
+  </div>
+  <div class="app-bar__actions">
+    <div class="segmented segmented--icon" id="themeSegmented" role="group" aria-label="Theme mode"></div>
+    <div class="segmented segmented--icon" id="langSegmented" role="group" aria-label="Language"></div>
+    <button class="icon-button" id="btnOpen" data-icon="upload" data-i18n-title="action.open"></button>
+    <button class="icon-button" id="btnExportPng" data-icon="download" data-i18n-title="action.exportPng"></button>
+    <button class="icon-button" id="btnExportTheme" data-icon="palette" data-i18n-title="action.exportTheme"></button>
+    <button class="icon-button" id="btnHelp" data-icon="info" data-i18n-title="action.help"></button>
+  </div>
+</header>
+
+<nav class="nav-rail" id="navRail" aria-label="Main navigation">
+  <button class="fab" id="fabOpen" data-icon="upload" data-i18n-title="action.open"></button>
+  <ul class="nav-rail__items" id="railItems"></ul>
+  <div class="nav-rail__tail">
+    <button class="icon-button" id="btnSample" data-icon="sparkle" data-i18n-title="action.sample"></button>
+  </div>
+</nav>
+
+<main class="workspace" id="workspace">
+  <section class="stage-surface" id="stageSurface">
+    <canvas id="stage"></canvas>
+
+    <div class="stage-empty" id="stageEmpty">
+      <div class="stage-empty__card">
+        <span class="stage-empty__icon" data-icon="image"></span>
+        <h2 class="headline-small" data-i18n="empty.title"></h2>
+        <p class="body-medium stage-empty__text" data-i18n="empty.text"></p>
+        <div class="stage-empty__actions">
+          <button class="button button--filled" id="btnEmptyOpen"><span class="button__icon" data-icon="upload"></span><span data-i18n="empty.open"></span></button>
+          <button class="button button--tonal" id="btnEmptySample"><span class="button__icon" data-icon="sparkle"></span><span data-i18n="empty.sample"></span></button>
+        </div>
+        <p class="label-medium stage-empty__hint" data-i18n="empty.hint"></p>
+      </div>
+    </div>
+
+    <div class="stage-loading" id="stageLoading" hidden>
+      <div class="stage-loading__card">
+        <span class="spinner"></span>
+        <span class="label-large" id="loadingText" data-i18n="load.analysis"></span>
+      </div>
+    </div>
+
+    <div class="drop-veil" id="dropVeil" hidden>
+      <div class="drop-veil__inner">
+        <span data-icon="upload"></span>
+        <p class="title-large" data-i18n="drop.title"></p>
+        <p class="body-medium" data-i18n="drop.text"></p>
+      </div>
+    </div>
+
+    <button class="stage-score" id="stageScore" hidden title="Open the rhythm panel">
+      <span class="stage-score__label" data-i18n="badge.label"></span>
+      <span class="stage-score__value" id="stageScoreValue">—</span>
+      <span class="stage-score__grade" id="stageScoreGrade"></span>
+    </button>
+
+    <div class="stage-hud" id="stageHud" hidden>
+      <div class="hud-chip" id="hudZoom">100%</div>
+      <div class="hud-tools">
+        <button class="icon-button icon-button--sm" id="toolPan" data-icon="pan" title="Pan (H)"></button>
+        <button class="icon-button icon-button--sm" id="toolZoom" data-icon="zoom_in" title="Marquee zoom (Z)"></button>
+        <button class="icon-button icon-button--sm" id="toolPick" data-icon="colorize" title="Pick color (I)"></button>
+      </div>
+    </div>
+  </section>
+
+  <aside class="panel" id="panel" aria-label="Control panel" hidden>
+    <header class="panel__header">
+      <h2 class="title-medium" id="panelTitle"></h2>
+      <button class="icon-button" id="panelClose" data-icon="close" data-i18n-title="panel.close"></button>
+    </header>
+    <div class="panel__body" id="panelBody"></div>
+  </aside>
+</main>
+
+<footer class="status-bar">
+  <span class="label-medium status-bar__item" id="statusMedia" data-i18n="status.none"></span>
+  <span class="status-bar__spacer"></span>
+  <span class="label-medium status-bar__item status-bar__mono" id="statusCursor"></span>
+  <span class="status-bar__divider"></span>
+  <div class="zoom-group">
+    <button class="icon-button icon-button--sm" id="zoomOut" data-icon="remove" title="Zoom out (-)" aria-label="Zoom out"></button>
+    <button class="zoom-group__value label-medium" id="zoomValue" title="Click to fit">100%</button>
+    <button class="icon-button icon-button--sm" id="zoomIn" data-icon="add" title="Zoom in (+)" aria-label="Zoom in"></button>
+    <button class="icon-button icon-button--sm" id="zoomFit" data-icon="fit" title="Fit to window (0)" aria-label="Fit"></button>
+    <button class="icon-button icon-button--sm" id="zoomOne" data-icon="actual" title="Actual pixels (1)" aria-label="Actual size"></button>
+  </div>
+</footer>
+
+<div class="snackbar-host" id="snackbarHost" aria-live="polite"></div>
+
+<dialog class="dialog" id="helpDialog">
+  <div class="dialog__head">
+    <span class="dialog__icon" data-icon="info"></span>
+    <h2 class="title-large">InfoLen</h2>
+  </div>
+  <div class="dialog__body">
+    <p class="body-medium" data-i18n="help.body"></p>
+    <div class="shortcut-grid">
+      <div class="shortcut"><kbd>Drop</kbd><span data-i18n="k.drag"></span></div>
+      <div class="shortcut"><kbd>Wheel</kbd><span data-i18n="k.wheel"></span></div>
+      <div class="shortcut"><kbd>Drag</kbd><span data-i18n="k.dragCanvas"></span></div>
+      <div class="shortcut"><kbd>Alt+Drag</kbd><span data-i18n="k.altDrag"></span></div>
+      <div class="shortcut"><kbd>0</kbd><span data-i18n="k.fit"></span></div>
+      <div class="shortcut"><kbd>1</kbd><span data-i18n="k.actual"></span></div>
+      <div class="shortcut"><kbd>+</kbd> / <kbd>-</kbd><span data-i18n="k.zoom"></span></div>
+      <div class="shortcut"><kbd>H</kbd> / <kbd>Z</kbd> / <kbd>I</kbd><span data-i18n="k.tools"></span></div>
+      <div class="shortcut"><kbd>Ctrl+O</kbd><span data-i18n="k.open"></span></div>
+      <div class="shortcut"><kbd>Ctrl+S</kbd><span data-i18n="k.export"></span></div>
+      <div class="shortcut"><kbd>Dbl-click</kbd><span data-i18n="k.chartReset"></span></div>
+      <div class="shortcut"><kbd>Brush</kbd><span data-i18n="k.chartBrush"></span></div>
+    </div>
+    <p class="body-small dialog__note" data-i18n="help.note"></p>
+  </div>
+  <div class="dialog__actions">
+    <button class="button button--text" id="helpClose" data-i18n="help.close"></button>
+  </div>
+</dialog>
+
+<input type="file" id="fileInput" accept="image/*,video/*" hidden />
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>

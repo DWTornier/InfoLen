@@ -1,0 +1,173 @@
+/* ============================================================
+   InfoLen · Material You 设计令牌
+   默认值会在媒体载入后由 JS 动态覆盖（--md-sys-color-*）
+   ============================================================ */
+:root {
+  color-scheme: dark;
+
+  /* --- Baseline key colors (会被动态配色覆盖) --- */
+  --md-sys-color-primary: #c8c0ff;
+  --md-sys-color-on-primary: #322263;
+  --md-sys-color-primary-container: #4a3a8c;
+  --md-sys-color-on-primary-container: #e5dfff;
+
+  --md-sys-color-secondary: #c9c3dc;
+  --md-sys-color-on-secondary: #322f42;
+  --md-sys-color-secondary-container: #484559;
+  --md-sys-color-on-secondary-container: #e5dff2;
+
+  --md-sys-color-tertiary: #efb8c8;
+  --md-sys-color-on-tertiary: #4e2534;
+  --md-sys-color-tertiary-container: #673b4b;
+  --md-sys-color-on-tertiary-container: #ffd9e3;
+
+  --md-sys-color-error: #ffb4ab;
+  --md-sys-color-on-error: #690005;
+  --md-sys-color-error-container: #93000a;
+  --md-sys-color-on-error-container: #ffdad6;
+
+  --md-sys-color-background: #14121b;
+  --md-sys-color-on-background: #e6e0e9;
+  --md-sys-color-surface: #14121b;
+  --md-sys-color-on-surface: #e6e0e9;
+  --md-sys-color-surface-variant: #49454f;
+  --md-sys-color-on-surface-variant: #cac4d0;
+
+  --md-sys-color-surface-dim: #14121b;
+  --md-sys-color-surface-bright: #3b383e;
+  --md-sys-color-surface-container-lowest: #0f0d14;
+  --md-sys-color-surface-container-low: #1d1b22;
+  --md-sys-color-surface-container: #211f27;
+  --md-sys-color-surface-container-high: #2b2932;
+  --md-sys-color-surface-container-highest: #36343d;
+
+  --md-sys-color-outline: #948f99;
+  --md-sys-color-outline-variant: #49454f;
+  --md-sys-color-inverse-surface: #e6e0e9;
+  --md-sys-color-inverse-on-surface: #322f38;
+  --md-sys-color-inverse-primary: #6750a4;
+  --md-sys-color-shadow: #000000;
+  --md-sys-color-scrim: #000000;
+  --md-sys-color-surface-tint: var(--md-sys-color-primary);
+
+  /* --- 派生语义变量（组件层统一使用这些） --- */
+  --app-bg: var(--md-sys-color-surface);
+  --app-on-bg: var(--md-sys-color-on-surface);
+  --app-surface: var(--md-sys-color-surface-container-low);
+  --app-surface-2: var(--md-sys-color-surface-container);
+  --app-surface-3: var(--md-sys-color-surface-container-high);
+  --app-outline: var(--md-sys-color-outline-variant);
+  --app-muted: var(--md-sys-color-on-surface-variant);
+  --app-accent: var(--md-sys-color-primary);
+  --app-on-accent: var(--md-sys-color-on-primary);
+  --app-accent-container: var(--md-sys-color-primary-container);
+  --app-on-accent-container: var(--md-sys-color-on-primary-container);
+
+  /* 玻璃/亚克力透明度 */
+  --glass-1: 0.62;
+  --glass-2: 0.78;
+  --glass-3: 0.9;
+  --glass-blur: 28px;
+  --glass-border: color-mix(in srgb, var(--md-sys-color-outline-variant) 42%, transparent);
+  --glass-highlight: color-mix(in srgb, #ffffff 12%, transparent);
+
+  /* --- 形状 --- */
+  --md-sys-shape-corner-none: 0px;
+  --md-sys-shape-corner-extra-small: 4px;
+  --md-sys-shape-corner-small: 8px;
+  --md-sys-shape-corner-medium: 12px;
+  --md-sys-shape-corner-large: 16px;
+  --md-sys-shape-corner-extra-large: 28px;
+  --md-sys-shape-corner-full: 999px;
+
+  /* --- 字型 --- */
+  --md-sys-typescale-font: "Roboto Flex", "Google Sans", Roboto, "Segoe UI Variable Display",
+    "Segoe UI", system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  --md-sys-typescale-font-mono: "JetBrains Mono", "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+
+  --display-large: 400 57px/64px var(--md-sys-typescale-font);
+  --display-medium: 400 45px/52px var(--md-sys-typescale-font);
+  --display-small: 400 36px/44px var(--md-sys-typescale-font);
+  --headline-large: 400 32px/40px var(--md-sys-typescale-font);
+  --headline-medium: 400 28px/36px var(--md-sys-typescale-font);
+  --headline-small: 400 24px/32px var(--md-sys-typescale-font);
+  --title-large: 400 22px/28px var(--md-sys-typescale-font);
+  --title-medium: 500 16px/24px var(--md-sys-typescale-font);
+  --title-small: 500 14px/20px var(--md-sys-typescale-font);
+  --body-large: 400 16px/24px var(--md-sys-typescale-font);
+  --body-medium: 400 14px/20px var(--md-sys-typescale-font);
+  --body-small: 400 12px/16px var(--md-sys-typescale-font);
+  --label-large: 500 14px/20px var(--md-sys-typescale-font);
+  --label-medium: 500 12px/16px var(--md-sys-typescale-font);
+  --label-small: 500 11px/16px var(--md-sys-typescale-font);
+
+  /* --- 动效 --- */
+  --md-sys-motion-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --md-sys-motion-easing-emphasized: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --md-sys-motion-easing-emphasized-decelerate: cubic-bezier(0.05, 0.7, 0.1, 1);
+  --md-sys-motion-easing-emphasized-accelerate: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --md-sys-motion-easing-legacy: cubic-bezier(0.4, 0, 0.2, 1);
+  --md-sys-motion-duration-short1: 80ms;
+  --md-sys-motion-duration-short2: 120ms;
+  --md-sys-motion-duration-medium1: 240ms;
+  --md-sys-motion-duration-medium2: 320ms;
+  --md-sys-motion-duration-long1: 420ms;
+  --md-sys-motion-duration-long2: 560ms;
+
+  /* --- 高度（M3 表面着色） --- */
+  --md-sys-elevation-1: linear-gradient(0deg, color-mix(in srgb, var(--md-sys-color-primary) 5%, transparent), color-mix(in srgb, var(--md-sys-color-primary) 5%, transparent));
+  --md-sys-elevation-2: linear-gradient(0deg, color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent), color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent));
+  --md-sys-elevation-3: linear-gradient(0deg, color-mix(in srgb, var(--md-sys-color-primary) 11%, transparent), color-mix(in srgb, var(--md-sys-color-primary) 11%, transparent));
+
+  --rail-width: 80px;
+  --bar-height: 68px;
+  --status-height: 38px;
+}
+
+/* 亮色基线（未载入媒体时的默认） */
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --md-sys-color-primary: #6750a4;
+  --md-sys-color-on-primary: #ffffff;
+  --md-sys-color-primary-container: #e9ddff;
+  --md-sys-color-on-primary-container: #22005d;
+
+  --md-sys-color-secondary: #625b71;
+  --md-sys-color-on-secondary: #ffffff;
+  --md-sys-color-secondary-container: #e8def8;
+  --md-sys-color-on-secondary-container: #1e192b;
+
+  --md-sys-color-tertiary: #7e5260;
+  --md-sys-color-on-tertiary: #ffffff;
+  --md-sys-color-tertiary-container: #ffd8e4;
+  --md-sys-color-on-tertiary-container: #370b1e;
+
+  --md-sys-color-error: #b3261e;
+  --md-sys-color-on-error: #ffffff;
+  --md-sys-color-error-container: #f9dedc;
+  --md-sys-color-on-error-container: #410e0b;
+
+  --md-sys-color-background: #fdf7ff;
+  --md-sys-color-on-background: #1d1b20;
+  --md-sys-color-surface: #fdf7ff;
+  --md-sys-color-on-surface: #1d1b20;
+  --md-sys-color-surface-variant: #e7e0ec;
+  --md-sys-color-on-surface-variant: #49454f;
+
+  --md-sys-color-surface-dim: #ded8e1;
+  --md-sys-color-surface-bright: #fdf7ff;
+  --md-sys-color-surface-container-lowest: #ffffff;
+  --md-sys-color-surface-container-low: #f8f2fa;
+  --md-sys-color-surface-container: #f3edf7;
+  --md-sys-color-surface-container-high: #ede7f1;
+  --md-sys-color-surface-container-highest: #e6e0e9;
+
+  --md-sys-color-outline: #79747e;
+  --md-sys-color-outline-variant: #cac4d0;
+  --md-sys-color-inverse-surface: #322f35;
+  --md-sys-color-inverse-on-surface: #f5eff7;
+  --md-sys-color-inverse-primary: #d0bcff;
+
+  --glass-highlight: color-mix(in srgb, #ffffff 55%, transparent);
+}
